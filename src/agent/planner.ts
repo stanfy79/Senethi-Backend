@@ -79,6 +79,14 @@ Execution status JSON:
   "executionId": "..."
 }
 
+If user sends an invalid request, return a JSON object with the following structure:
+{
+  "type": "invalid_command",
+  "message": "Please provide a valid command. For example, 'Send 0.01 ETH to 0xabc...' or 'Get execution status for execution ID 1234...'"
+}
+
+Do not include any other text or explanation. Return ONLY JSON.
+
 Return ONLY JSON.
 
 User request:

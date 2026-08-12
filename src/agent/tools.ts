@@ -5,7 +5,7 @@ const keeperHub = new KeeperHubClient();
 
 export async function simulateAgentAction(
   action: AgentAction,
-  taskId: string
+  taskId: string,
 ) {
   switch (action.type) {
     case "transfer": {
@@ -14,23 +14,23 @@ export async function simulateAgentAction(
         chainId: action.chainId,
         recipientAddress: action.recipientAddress,
         amount: action.amount,
-        tokenAddress: action.tokenAddress
+        tokenAddress: action.tokenAddress,
       });
 
       return {
         type: "transfer_simulation",
-        simulation
+        simulation,
       };
     }
 
     case "get_execution_status": {
       const status = await keeperHub.getExecutionStatus(
-        action.executionId
+        action.executionId,
       );
 
       return {
         type: "execution_status",
-        execution: status
+        execution: status,
       };
     }
   }
@@ -38,34 +38,34 @@ export async function simulateAgentAction(
 
 export async function executeAgentAction(
   action: AgentAction,
-  taskId: string
+  taskId: string,
 ) {
   switch (action.type) {
     case "transfer": {
-      const execution =
-        await keeperHub.executeTransfer({
-          taskId,
-          chainId: action.chainId,
-          recipientAddress: action.recipientAddress,
-          amount: action.amount,
-          tokenAddress: action.tokenAddress
-        });
+
+      const execution = await keeperHub.executeTransfer({
+        taskId,
+        chainId: action.chainId,
+        recipientAddress: action.recipientAddress,
+        amount: action.amount,
+        tokenAddress: action.tokenAddress,
+      });
 
       return {
         type: "transfer_result",
-        execution
+        execution,
       };
     }
 
     case "get_execution_status": {
       const execution =
         await keeperHub.getExecutionStatus(
-          action.executionId
+          action.executionId,
         );
 
       return {
         type: "execution_status",
-        execution
+        execution,
       };
     }
   }

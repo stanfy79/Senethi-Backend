@@ -20,15 +20,6 @@ const TOKENS: Record<number, Record<string, TokenDefinition>> = {
     //   decimals: 6,
     // },
   },
-
-  // Example:
-  // 84532: {
-  //   USDC: {
-  //     symbol: "USDC",
-  //     address: "...",
-  //     decimals: 6,
-  //   },
-  // },
 };
 
 export function resolveToken(

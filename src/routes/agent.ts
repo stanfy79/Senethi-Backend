@@ -19,10 +19,6 @@ export async function agentRoutes(
         body.chainId
       );
 
-      /*
-       * Simulation failure is a valid agent outcome,
-       * not a server error.
-       */
       if (result.status === "simulation_failed") {
         return reply.code(422).send({
           ok: false,

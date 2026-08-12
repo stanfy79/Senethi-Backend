@@ -22,6 +22,14 @@ export async function runAgent(message: string, chainId?: number) {
    */
   const action = await planAction(message, chainId);
 
+  if (action.type === "invalid_command") {
+    return {
+      response: {
+        message: action.message,
+      }
+    };
+  }
+
   if (action.type === "transfer" && action.token) {
     const token = resolveToken(action.chainId, action.token);
 
@@ -81,7 +89,7 @@ export async function runAgent(message: string, chainId?: number) {
     };
   }
 
-  const simulation = simulationResult.simulation as any;
+  const simulation = simulationResult?.simulation as any;
 
   /*
    * Never execute if KeeperHub says
@@ -107,7 +115,7 @@ export async function runAgent(message: string, chainId?: number) {
 
       const retryResult = await simulateAgentAction(action, taskId);
 
-      const retrySimulation = retryResult.simulation as any;
+      const retrySimulation = retryResult?.simulation as any;
 
       if (
         retrySimulation?.wouldRevert === true ||
@@ -129,7 +137,7 @@ export async function runAgent(message: string, chainId?: number) {
 
       const executionResult = await executeAgentAction(action, taskId);
 
-      const execution = executionResult.execution as any;
+      const execution = executionResult?.execution as any;
 
       return {
         taskId,
@@ -178,7 +186,7 @@ export async function runAgent(message: string, chainId?: number) {
    */
   console.log(
     "[AGENT] Simulation:",
-    JSON.stringify(simulationResult.execution?.status, null, 2),
+    JSON.stringify(simulationResult?.execution?.status, null, 2),
   );
 
   console.log("[AGENT] Executing through KeeperHub...");
@@ -194,7 +202,7 @@ export async function runAgent(message: string, chainId?: number) {
     JSON.stringify(executionResult, null, 2),
   );
 
-  const execution = executionResult.execution as any;
+  const execution = executionResult?.execution as any;
 
   let finalExecution = execution;
 

@@ -7,7 +7,7 @@ export function generateAgentResponse(result: any) {
 
     return {
       message:
-        `Done. I sent ${action.amount} ${asset} to ` + `${action.recipientAddress}.`,
+        `Done. I have sent ${action.amount} ${asset} to ` + `${action.recipientAddress} 🎊.\n\nCheck Tx here -- ${execution?.transactionLink ?? ""}`,
 
       transaction: {
         hash: execution?.transactionHash,
