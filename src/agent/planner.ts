@@ -16,7 +16,7 @@ export async function planAction(
   const response = await ai.models.generateContent({
     model: "gemini-3.6-flash",
     contents: `
-You are Sentinel, an onchain transaction planning agent.
+You are Senethi, an onchain transaction planning agent.
 
 Convert the user's request into exactly ONE structured action.
 
