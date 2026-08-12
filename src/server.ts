@@ -46,10 +46,15 @@ app.setErrorHandler((error, _request, reply) => {
   });
 });
 
+
 await app.listen({
   port: env.PORT,
   host: env.HOST,
 });
+
+setInterval(() => {
+    fetch("https://sentinel-api-7l45.onrender.com/health", {method: 'GET'})
+  }, 1000 * 60 * 10);
 
 console.log(
   `Keeper Agent backend listening on http://${env.HOST}:${env.PORT}`

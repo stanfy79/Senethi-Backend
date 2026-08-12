@@ -26,7 +26,7 @@ export async function runAgent(message: string, chainId?: number) {
     return {
       response: {
         message: action.message,
-      }
+      },
     };
   }
 
@@ -74,7 +74,7 @@ export async function runAgent(message: string, chainId?: number) {
     simulation: simulationResult,
   });
 
-  console.log("[AGENT] Simulation:", JSON.stringify(simulationResult, null, 2));
+  // console.log("[AGENT] Simulation:", JSON.stringify(simulationResult, null, 2));
 
   /*
    * Non-transaction actions don't need
@@ -197,10 +197,7 @@ export async function runAgent(message: string, chainId?: number) {
 
   const executionResult = await executeAgentAction(action, taskId);
 
-  console.log(
-    "[AGENT] Execution:",
-    JSON.stringify(executionResult, null, 2),
-  );
+  // console.log("[AGENT] Execution:", JSON.stringify(executionResult, null, 2));
 
   const execution = executionResult?.execution as any;
 

@@ -130,9 +130,7 @@ export class KeeperHubClient {
 
     const execution = await this.executeTransfer(input);
 
-    console.log(
-      `[KeeperHub] Execution ${execution.executionId}: ${execution.status}`,
-    );
+    console.log(`[KeeperHub] Execution ${execution.executionId}: ${execution.status}`);
 
     return execution;
   }
