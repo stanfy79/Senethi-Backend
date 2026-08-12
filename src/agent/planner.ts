@@ -14,7 +14,7 @@ export async function planAction(
 ): Promise<AgentAction> {
 
   const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
+    model: "gemini-3.6-flash",
     contents: `
 You are Sentinel, an onchain transaction planning agent.
 

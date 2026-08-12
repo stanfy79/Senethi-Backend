@@ -10,9 +10,7 @@ const agentRequest = z.object({
 export async function agentRoutes(
   app: FastifyInstance
 ) {
-
   app.post("/v1/agent/run", async (req, reply) => {
-
     try {
       const body = agentRequest.parse(req.body);
 
@@ -21,13 +19,23 @@ export async function agentRoutes(
         body.chainId
       );
 
+      /*
+       * Simulation failure is a valid agent outcome,
+       * not a server error.
+       */
+      if (result.status === "simulation_failed") {
+        return reply.code(422).send({
+          ok: false,
+          ...result
+        });
+      }
+
       return reply.send({
         ok: true,
         ...result
       });
 
     } catch (error: any) {
-
       console.error(
         "[AGENT] Error:",
         error
@@ -37,7 +45,10 @@ export async function agentRoutes(
         ok: false,
         error: {
           code: "AGENT_ERROR",
-          message: error.message
+          message:
+            error instanceof Error
+              ? error.message
+              : String(error)
         }
       });
     }
