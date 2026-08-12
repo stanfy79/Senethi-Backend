@@ -10,5 +10,5 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*.ts", "src/agent/schemas.ts"]
+  "include": ["src/**/*.ts", "src/agent/schemas.ts", "src/agent/tasks.ts"]
 }

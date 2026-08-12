@@ -22,7 +22,9 @@ const TaskSchema = new Schema(
       enum: [
         "planning",
         "simulating",
+        "simulation_failed",
         "executing",
+        "checking_execution",
         "completed",
         "failed"
       ],

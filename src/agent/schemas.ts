@@ -1,21 +1,28 @@
 import { z } from "zod";
 
-export const transferActionSchema = z.object({
+export const transferAction = z.object({
   type: z.literal("transfer"),
+
   chainId: z.number().int().positive(),
+
   recipientAddress: z.string().min(1),
+
   amount: z.string().min(1),
-  tokenAddress: z.string().optional()
+
+  token: z.string().min(1).optional(),
+
+  tokenAddress: z.string().optional(),
 });
 
-export const executionStatusActionSchema = z.object({
+export const executionStatusAction = z.object({
   type: z.literal("get_execution_status"),
-  executionId: z.string().min(1)
+
+  executionId: z.string().min(1),
 });
 
-export const agentActionSchema = z.discriminatedUnion("type", [
-  transferActionSchema,
-  executionStatusActionSchema
+export const agentAction = z.discriminatedUnion("type", [
+  transferAction,
+  executionStatusAction,
 ]);
 
-export type AgentAction = z.infer<typeof agentActionSchema>;
+export type AgentAction = z.infer<typeof agentAction>;

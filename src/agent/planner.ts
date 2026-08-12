@@ -1,6 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 import {
-  agentActionSchema,
+  agentAction,
   type AgentAction
 } from "./schemas.js";
 
@@ -25,20 +25,52 @@ Allowed actions:
 1. transfer
 2. get_execution_status
 
-For transfer:
-- Extract the amount.
-- Extract the recipient address.
-- Use the provided chainId when available.
-- Never invent a recipient address.
-- Never invent an amount.
-- Never invent a chain ID.
+For transfers:
 
-Transfer JSON:
+- "send ETH" means a native asset transfer.
+- "send USDC" means an ERC-20 token transfer.
+- "send USDT" means an ERC-20 token transfer.
+- Preserve the exact requested amount as a decimal string.
+- Never invent a token contract address.
+- Return the token symbol in the "token" field.
+- The backend will resolve the token symbol to the correct contract address.
+- If the user does not specify a token, use ETH.
+
+Examples:
+
+User:
+"Send 0.01 ETH to 0xabc..."
+
+Action:
 {
   "type": "transfer",
   "chainId": 11155111,
-  "recipientAddress": "0x...",
-  "amount": "0.001"
+  "recipientAddress": "0xabc...",
+  "amount": "0.01"
+}
+
+User:
+"Send 5 USDC to 0xabc..."
+
+Action:
+{
+  "type": "transfer",
+  "chainId": 11155111,
+  "recipientAddress": "0xabc...",
+  "amount": "5",
+  "token": "USDC"
+}
+
+User:
+"Transfer 20 USDT to 0xabc..."
+
+Action:
+{
+  "type": "transfer",
+  "chainId": 11155111,
+  "recipientAddress": "0xabc...",
+  "amount": "20",
+  "token": "USDT"
 }
 
 Execution status JSON:
@@ -73,5 +105,5 @@ ${chainId ?? "none"}
     );
   }
 
-  return agentActionSchema.parse(parsed);
+  return agentAction.parse(parsed);
 }

@@ -4,7 +4,9 @@ import { Task } from "../models/task.js";
 export type TaskStatus =
   | "planning"
   | "simulating"
+  | "simulation_failed"
   | "executing"
+  | "checking_execution"
   | "completed"
   | "failed";
 
@@ -40,7 +42,7 @@ export async function updateTask(
       { taskId },
       { $set: update },
       {
-        new: true,
+        returnDocument: 'after',
         runValidators: true
       }
     );
