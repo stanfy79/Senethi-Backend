@@ -12,7 +12,7 @@ const app = Fastify({
 });
 
 await app.register(cors, {
-  origin: "http://localhost:5173",
+  origin: ["http://localhost:5173", "https://senethi.vercel.app"],
   methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: [
     "Content-Type",
