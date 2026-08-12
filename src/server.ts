@@ -3,8 +3,11 @@ import { env } from "./config.js";
 import { healthRoutes } from "./routes/health.js";
 import { actionRoutes } from "./routes/actions.js";
 import { agentRoutes } from "./routes/agent.js";
+import { connectDatabase } from "./database.js";
 
 const app = Fastify({ logger: true });
+
+await connectDatabase();
 
 await app.register(healthRoutes);
 await app.register(actionRoutes);
